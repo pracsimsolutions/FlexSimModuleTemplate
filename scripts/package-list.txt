@@ -1,0 +1,18 @@
+# Files and folders to put in the package, one path per line,
+# relative to the module folder.
+#
+# - A file:    bitmaps\icon.bmp
+# - A folder:  bitmaps        (everything inside it, including sub-folders)
+# - A pattern: data\*.csv
+# Lines starting with # are ignored.
+#
+# The module's .dll and .t are always packaged, even if they're not listed.
+# They're listed here to show what an entry looks like.
+# (rename-module.bat updates these two names when you rename the module.)
+
+FlexSimModuleTemplate.dll
+FlexSimModuleTemplate.t
+
+# Examples of extra entries:
+# bitmaps
+# help\guide.pdf

@@ -1,0 +1,32 @@
+# Normalise line endings in the REPOSITORY, on commit, for every text file.
+#
+# Why this exists in a fresh module: without it, what gets stored depends on each
+# contributor's core.autocrlf -- which on Windows is set by the Git installer's
+# SYSTEM config, not by anything in the repo. It works until someone clones with a
+# different default and their next commit rewrites whole files as a line-ending
+# change, burying the real diff. `text=auto` makes it explicit and machine-
+# independent: text files are LF in git, whatever the working tree does.
+#
+# It deliberately does NOT set `eol=lf`. That would force an LF WORKING TREE too,
+# and a FlexSim module contains files whose consumers may not tolerate it -- your
+# <Module>.fsx is parsed by FlexSim's own cmdloadtree. Leaving eol unset keeps the
+# normal Windows checkout behaviour.
+#
+# Consequence worth knowing: any generator that writes LF will make git report
+# "LF will be replaced by CRLF the next time Git touches it" on a CRLF working
+# tree. That warning is COSMETIC -- the committed blob is clean LF either way.
+# Do not chase it. DO check `git diff --numstat` when a diff looks unexpectedly
+# large: a genuine line-ending rewrite shows up as +N/-N across the whole file.
+#
+# Mark genuinely binary payloads explicitly so `text=auto` never guesses at them.
+* text=auto
+
+# --- binary: never normalise, never diff as text ---
+*.dll   binary
+*.lib   binary
+*.exp   binary
+*.pdb   binary
+*.png   binary
+*.ico   binary
+*.cur   binary
+*.t     binary
